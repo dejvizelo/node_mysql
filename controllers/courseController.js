@@ -27,8 +27,8 @@ exports.addCourse = function (req, res) {
 };
 
 exports.getCourseById = function (req, res) {
-    let sql = `SELECT * FROM courses WHERE id = ${req.params.id}`;
-    db.query(sql, (err, result) => {
+    let sql = `SELECT * FROM courses WHERE id = ?`;
+    db.query(sql, [req.params.id], (err, result) => {
         if(err) {
             console.log(err.message);
             res.status(500).json({errorMessage: err.message});
@@ -44,8 +44,8 @@ exports.getCourseById = function (req, res) {
 
 exports.updateCourseById = function (req, res) {
     const course = req.body;
-    let sql = `UPDATE courses SET name = ? WHERE id = ${req.params.id}`;
-    db.query(sql, [course.name], (err, result) => {
+    let sql = `UPDATE courses SET name = ? WHERE id = ?`;
+    db.query(sql, [course.name, req.params.id], (err, result) => {
         if(err) {
             console.log(err.message);
             res.status(500).json({errorMessage: err.message});
@@ -60,8 +60,8 @@ exports.updateCourseById = function (req, res) {
 };
 
 exports.deleteCourseById = function (req, res) {
-    let sql = `DELETE FROM courses WHERE id = ${req.params.id}`;
-    db.query(sql, (err, result) => {
+    let sql = `DELETE FROM courses WHERE id = ?`;
+    db.query(sql, [req.params.id], (err, result) => {
         if(err) {
             console.log(err.message);
             res.status(500).json({errorMessage: err.message});
