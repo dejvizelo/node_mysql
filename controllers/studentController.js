@@ -44,8 +44,8 @@ exports.getStudentById = function (req, res) {
 
 exports.updateStudentById = function (req, res) {
     const student = req.body;
-    let sql = `UPDATE students SET name = ? WHERE id = ?`;
-    db.query(sql, [student.name, req.params.id], (err, result) => {
+    let sql = `UPDATE students SET name = ?, age = ? WHERE id = ?`;
+    db.query(sql, [student.name, student.age, req.params.id], (err, result) => {
         if(err) {
             console.log(err.message);
             res.status(500).json({errorMessage: err.message});
@@ -60,8 +60,12 @@ exports.updateStudentById = function (req, res) {
 };
 
 exports.deleteStudentById = function (req, res) {
-    let sql = `DELETE FROM students WHERE id = ?`;
-    db.query(sql, [req.params.id], (err, result) => {
+    let sql1 = `DELETE FROM is_registered WHERE s_id = ?`;
+    db.query(sql1, [req.params.id], (err, result) => {
+        if(err) res.status(500).json({errorMessage: err.message});
+    });
+    let sql2 = `DELETE FROM students WHERE id = ?`;
+    db.query(sql2, [req.params.id], (err, result) => {
         if(err) {
             console.log(err.message);
             res.status(500).json({errorMessage: err.message});

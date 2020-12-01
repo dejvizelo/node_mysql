@@ -60,8 +60,12 @@ exports.updateCourseById = function (req, res) {
 };
 
 exports.deleteCourseById = function (req, res) {
-    let sql = `DELETE FROM courses WHERE id = ?`;
-    db.query(sql, [req.params.id], (err, result) => {
+    let sql1 = `DELETE FROM is_registered WHERE c_id = ?`;
+    db.query(sql1, [req.params.id], (err, result) => {
+        if(err) res.status(500).json({errorMessage: err.message});
+    });
+    let sql2 = `DELETE FROM courses WHERE id = ?`;
+    db.query(sql2, [req.params.id], (err, result) => {
         if(err) {
             console.log(err.message);
             res.status(500).json({errorMessage: err.message});

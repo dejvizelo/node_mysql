@@ -8,7 +8,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/students', student);
-app.use('/students', course);
+app.use('/courses', course);
 
 const port = 5000;
 
