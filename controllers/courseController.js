@@ -37,7 +37,7 @@ exports.getCourseById = function (req, res) {
             res.status(500).json({errorMessage: 'No course with such ID number.'});
         } else {
             console.log(result);
-            res.status(200).json(result);
+            res.status(200).json(result[0]);
         }
     });
 };
@@ -72,6 +72,20 @@ exports.deleteCourseById = function (req, res) {
         } else if(result['affectedRows'] == 0) {
             console.log('No course with such ID number.');
             res.status(500).json({errorMessage: 'No course with such ID number.'});
+        } else {
+            console.log(result);
+            res.status(200).json(result);
+        }
+    });
+};
+
+exports.registerStudentToCourse = function (req, res) {
+    const reg = req.body;
+    let sql = `INSERT INTO is_registered VALUE (?, ?)`;
+    db.query(sql, [reg.sId, reg.cId], (err, result) => {
+        if(err) {
+            console.log(err.message);
+            res.status(500).json({errorMessage: err.message});
         } else {
             console.log(result);
             res.status(200).json(result);

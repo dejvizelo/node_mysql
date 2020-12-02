@@ -37,7 +37,7 @@ exports.getStudentById = function (req, res) {
             res.status(500).json({errorMessage: 'No student with such ID number.'});
         } else {
             console.log(result);
-            res.status(200).json(result);
+            res.status(200).json(result[0]);
         }
     });
 };
