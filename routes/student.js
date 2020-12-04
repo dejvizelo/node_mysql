@@ -19,4 +19,7 @@ router.put('/:id', studentController.updateStudentById);
 // Delete student by id
 router.delete('/:id', studentController.deleteStudentById);
 
+// Get all enrolled courses of a student
+router.get('/:id/enrolledCourses', studentController.getEnrolledCourses);
+
 module.exports = router;

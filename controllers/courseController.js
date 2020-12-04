@@ -92,3 +92,29 @@ exports.registerStudentToCourse = function (req, res) {
         }
     });
 };
+
+exports.getRegisteredStudents = function (req, res) {
+    let sql = `SELECT * FROM is_registered JOIN students ON is_registered.s_id = students.id WHERE c_id = ?;`;
+    db.query(sql, [req.params.id], (err, result) => {
+        if(err) {
+            console.log(err.message);
+            res.status(500).json({errorMessage: err.message});
+        } else {
+            console.log(result);
+            res.status(200).json(result);
+        }
+    });
+};
+
+exports.unenrollStudent = function (req, res) {
+    let sql = `DELETE FROM is_registered WHERE c_id = ? AND s_id = ?;`;
+    db.query(sql, [req.params.cId, req.params.sId], (err, result) => {
+        if(err) {
+            console.log(err.message);
+            res.status(500).json({errorMessage: err.message});
+        } else {
+            console.log(result);
+            res.status(200).json(result);
+        }
+    });
+};

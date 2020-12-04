@@ -78,3 +78,16 @@ exports.deleteStudentById = function (req, res) {
         }
     });
 };
+
+exports.getEnrolledCourses = function (req, res) {
+    let sql = `SELECT * FROM is_registered JOIN courses ON is_registered.c_id = courses.id WHERE s_id = ?;`;
+    db.query(sql, [req.params.id], (err, result) => {
+        if(err) {
+            console.log(err.message);
+            res.status(500).json({errorMessage: err.message});
+        } else {
+            console.log(result);
+            res.status(200).json(result);
+        }
+    });
+};
